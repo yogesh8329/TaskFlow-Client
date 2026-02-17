@@ -1,0 +1,60 @@
+<div class="auth-container">
+
+  <h2>Register</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <!-- Username -->
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        type="text"
+        formControlName="email"
+        class="form-control"
+      />
+
+      <small *ngIf="submitted && registerForm.get('email')?.errors?.['required']">
+        Email is required
+      </small>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label>Password</label>
+      <input
+        type="password"
+        formControlName="password"
+        class="form-control"
+      />
+
+      <small *ngIf="submitted && registerForm.get('password')?.errors?.['required']">
+        Password is required
+      </small>
+
+      <small *ngIf="submitted && registerForm.get('password')?.errors?.['minlength']">
+        Minimum 6 characters required
+      </small>
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input
+        type="password"
+        formControlName="confirmPassword"
+        class="form-control"
+      />
+    </div>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Registering...' : 'Register' }}
+    </button>
+
+  </form>
+  <div class="auth-footer">
+  Already have an account?
+  <a routerLink="/auth">Login</a>
+</div>
+
+
+</div>

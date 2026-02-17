@@ -1,0 +1,61 @@
+<div class="tasks-container">
+
+  <h2>My Tasks</h2>
+
+  <!-- Add Task -->
+  <div class="add-task">
+    <input
+      type="text"
+      [(ngModel)]="newTaskTitle"
+      placeholder="Enter task title"
+    />
+    <button (click)="addTask()">Add</button>
+  </div>
+<!-- //<div class="task-card" *ngFor="let task of filteredTasks"> -->
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    Loading...
+  </div>
+  <div class="filters">
+  <button 
+    [class.active]="filter === 'all'" 
+    (click)="setFilter('all')">All</button>
+
+  <button 
+    [class.active]="filter === 'completed'" 
+    (click)="setFilter('completed')">Completed</button>
+
+  <button 
+    [class.active]="filter === 'pending'" 
+    (click)="setFilter('pending')">Pending</button>
+</div>
+
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && tasks.length === 0" class="empty">
+    No tasks found.
+  </div>
+
+  <!-- Task List -->
+  <div *ngIf="!loading && tasks.length > 0">
+    <div class="task-card" *ngFor="let task of tasks">
+      
+      <span [class.completed]="task.isCompleted">
+        {{ task.title }}
+      </span>
+
+      <div class="actions">
+        <button (click)="toggleComplete(task)">
+          {{ task.isCompleted ? 'Undo' : 'Complete' }}
+        </button>
+
+        <button class="delete" (click)="deleteTask(task.id)">
+          Delete
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,30 @@
+<div class="layout">
+
+  <aside class="sidebar">
+    <h2>TaskFlow</h2>
+
+    <nav>
+      <a routerLink="home" routerLinkActive="active">Home</a>
+      <a routerLink="tasks" routerLinkActive="active">Tasks</a>
+      <a routerLink="about" routerLinkActive="active">About</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+
+   <header class="topbar">
+  <div class="page-title">Dashboard Overview</div>
+
+  <div class="user-area">
+    <span class="welcome">Welcome, {{ user?.name || user?.email }}</span>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+</header>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>

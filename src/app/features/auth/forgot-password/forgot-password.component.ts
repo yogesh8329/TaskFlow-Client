@@ -32,7 +32,7 @@ onSubmit() {
     .forgotPassword(this.form.value.email)
     .subscribe({
       next: () => {
-        alert('If email exists, reset link sent.');
+        alert('If email exists, reset link sent.in  SPAM folder only');
         this.loading = false;
       },
       error: () => {

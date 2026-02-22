@@ -10,6 +10,7 @@ https://task-flow-client-seven.vercel.app
 - TypeScript
 - RxJS
 - JWT Authentication
+- Responsive UI
 - Vercel Deployment
 
 ## Features

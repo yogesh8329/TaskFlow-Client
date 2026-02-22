@@ -21,7 +21,7 @@ https://task-flow-client-seven.vercel.app
 - Task CRUD Operations
 
 ## Setup
-git clone https://github.com/YOUR-USERNAME/TaskFlow-Client.git
+git clone https://github.com/yogesh8329/TaskFlow-Client.git
 npm install
 ng serve
 

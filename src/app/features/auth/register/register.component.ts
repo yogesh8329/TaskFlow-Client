@@ -96,11 +96,16 @@ export class RegisterComponent {
       error: (err) => {
         this.loading = false;
 
-        if (err.status === 400) {
-          this.serverError = 'User already exists';
-        } else {
-          this.serverError = 'Registration failed. Try again.';
-        }
+        if (err.status === 409) {
+  this.serverError = 'User already exists';
+} 
+else if (err.status === 400) {
+  this.serverError = 'Invalid input';
+}
+else {
+  this.serverError = 'Something went wrong. Try again.';
+}
+       
       }
     });
   }

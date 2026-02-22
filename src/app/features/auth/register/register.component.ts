@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidationErrors
+} from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +19,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
   loading = false;
   submitted = false;
-  errorMessage: string | null = null;
+  serverError = '';
 
   constructor(
     private fb: FormBuilder,
@@ -25,50 +29,82 @@ export class RegisterComponent {
 
     this.registerForm = this.fb.group(
       {
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(
+              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            )
+          ]
+        ],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(
+              /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/
+            )
+          ]
+        ],
         confirmPassword: ['', Validators.required]
       },
       { validators: this.passwordMatchValidator }
     );
   }
 
-  get f() {
-    return this.registerForm.controls;
+  get email() {
+    return this.registerForm.get('email');
   }
 
-  private passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+  get password() {
+    return this.registerForm.get('password');
+  }
+
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword');
+  }
+
+  private passwordMatchValidator(
+    control: AbstractControl
+  ): ValidationErrors | null {
+
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
 
     if (!password || !confirmPassword) return null;
 
-    return password === confirmPassword ? null : { mismatch: true };
+    return password === confirmPassword
+      ? null
+      : { mismatch: true };
   }
 
   onSubmit(): void {
+
     this.submitted = true;
-    this.errorMessage = null;
+    this.serverError = '';
 
     if (this.registerForm.invalid) return;
 
     this.loading = true;
 
     const { email, password } = this.registerForm.value;
-this.authService.register({ email, password }).subscribe({
-  next: (res) => {
-    console.log('REGISTER SUCCESS RESPONSE:', res);
 
-    this.loading = false;
+    this.authService.register({ email, password }).subscribe({
+      next: () => {
+        this.loading = false;
+        this.router.navigate(['/auth']);
+      },
+      error: (err) => {
+        this.loading = false;
 
-    this.router.navigate(['/auth']);
-  },
-  error: (err) => {
-    console.log('REGISTER ERROR:', err);
-    this.loading = false;
-  },
-  complete: () => {
-    console.log('REGISTER COMPLETE');
+        if (err.status === 400) {
+          this.serverError = 'User already exists';
+        } else {
+          this.serverError = 'Registration failed. Try again.';
+        }
+      }
+    });
   }
-});
-  }}
+}

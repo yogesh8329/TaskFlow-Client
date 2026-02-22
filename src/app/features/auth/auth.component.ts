@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -14,19 +13,20 @@ export class AuthComponent {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
+  loginError = '';
 
- constructor(
-  private fb: FormBuilder,
-  private authService: AuthService,
-  private router: Router
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
   ) {
+
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', Validators.required]
     });
   }
 
-  // Strict-mode safe getters
   get email() {
     return this.loginForm.get('email');
   }
@@ -36,7 +36,9 @@ export class AuthComponent {
   }
 
   onSubmit() {
+
     this.submitted = true;
+    this.loginError = '';
 
     if (this.loginForm.invalid) {
       return;
@@ -44,21 +46,25 @@ export class AuthComponent {
 
     this.loading = true;
 
-    
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res: any) => {
 
-this.authService.login(this.loginForm.value).subscribe({
-  next: (res: any) => {
-    console.log('Login Success:', res);
+        const token = res.data.token;
+        localStorage.setItem('token', token);
 
-    const token = res.data.token;   // 🔥 FIX
-    localStorage.setItem('token', token);
+        this.loading = false;
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err: any) => {
 
-    this.loading = false;
-    this.router.navigate(['/dashboard']);
-  },
-  error: (err: any) => {
-    console.error('Login failed:', err);
-    this.loading = false;
+        this.loading = false;
+
+        if (err.status === 401) {
+          this.loginError = 'Invalid email or password';
+        } else {
+          this.loginError = 'Invalid email or password.';
+        }
+      }
+    });
   }
-});
-  }}
+}

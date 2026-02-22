@@ -4,6 +4,11 @@
     <h2>Login</h2>
     <p class="subtitle">Sign in to your account</p>
 
+    <!-- SERVER ERROR -->
+    <div class="server-error" *ngIf="loginError">
+      {{ loginError }}
+    </div>
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
       <!-- Email -->
@@ -16,12 +21,15 @@
         />
 
         <small class="error" *ngIf="submitted && email?.errors">
+
           <span *ngIf="email?.errors?.['required']">
             Email is required
           </span>
+
           <span *ngIf="email?.errors?.['email']">
-            Enter valid email
+            Invalid email format
           </span>
+
         </small>
       </div>
 
@@ -35,12 +43,11 @@
         />
 
         <small class="error" *ngIf="submitted && password?.errors">
+
           <span *ngIf="password?.errors?.['required']">
             Password is required
           </span>
-          <span *ngIf="password?.errors?.['minlength']">
-            Minimum 6 characters required
-          </span>
+
         </small>
       </div>
 
@@ -51,7 +58,7 @@
         </a>
       </div>
 
-      <!-- Login Button -->
+      <!-- Button -->
       <button type="submit" [disabled]="loading">
         <span *ngIf="!loading">Login</span>
         <span *ngIf="loading">Logging in...</span>
@@ -59,12 +66,10 @@
 
     </form>
 
-    <!-- Divider -->
     <div class="divider">
       <span>OR</span>
     </div>
 
-    <!-- Sign Up -->
     <div class="signup-link">
       Don't have an account?
       <a routerLink="/auth/register">Sign up</a>

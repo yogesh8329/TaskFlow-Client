@@ -30,8 +30,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
-            ],
+              "src/styles.scss"],
+        
             "scripts": []
           },
           "configurations": {
@@ -92,9 +92,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": [ "src/styles.css"],
             "scripts": []
           }
         }

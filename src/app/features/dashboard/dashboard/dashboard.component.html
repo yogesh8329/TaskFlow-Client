@@ -1,30 +1,72 @@
-<div class="layout">
+<div class="container-fluid p-0">
+  <div class="row g-0">
 
-  <aside class="sidebar">
-    <h2>TaskFlow</h2>
+    <!-- Desktop Sidebar -->
+    <div class="d-none d-md-block col-md-3 col-lg-2 bg-dark text-white p-3 sticky-top" style="height:100vh; overflow-y:auto;">
+      <h4 class="fw-bold mb-4">TaskFlow</h4>
 
-    <nav>
-      <a routerLink="home" routerLinkActive="active">Home</a>
-      <a routerLink="tasks" routerLinkActive="active">Tasks</a>
-      <a routerLink="about" routerLinkActive="active">About</a>
-    </nav>
-  </aside>
+      <nav class="nav flex-column">
+        <a class="nav-link text-white" routerLink="home" routerLinkActive="active">Home</a>
+        <a class="nav-link text-white" routerLink="tasks" routerLinkActive="active">Tasks</a>
+        <a class="nav-link text-white" routerLink="about" routerLinkActive="active">About</a>
+      </nav>
+    </div>
 
-  <div class="main">
+    <!-- Main Area -->
+    <div class="col-12 col-md-9 col-lg-10">
 
-   <header class="topbar">
-  <div class="page-title">Dashboard Overview</div>
+      <!-- Topbar -->
+      <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom bg-white sticky-top" style="z-index: 1020;">
 
-  <div class="user-area">
-    <span class="welcome">Welcome, {{ user?.name || user?.email }}</span>
-    <button class="logout-btn" (click)="logout()">Logout</button>
-  </div>
-</header>
+        <!-- Left Section -->
+        <div class="d-flex align-items-center gap-3">
+          <!-- Mobile Hamburger -->
+          <button class="btn btn-dark d-md-none"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#mobileSidebar">
+            ☰
+          </button>
 
-    <div class="content">
-      <router-outlet></router-outlet>
+         <h6 class="mb-0 fw-semibold text-truncate">Dashboard Overview</h6>
+        </div>
+
+        <!-- Right Section -->
+        <div class="d-flex align-items-center gap-3">
+          <span class="text-muted small d-none d-sm-inline">
+            Welcome, {{ user?.name || user?.email }}
+          </span>
+          <button class="btn btn-danger btn-sm" (click)="logout()">
+            Logout
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Page Content -->
+      <div class="p-3 p-md-4 bg-light" style="min-height: calc(100vh - 60px);">
+        <router-outlet></router-outlet>
+      </div>
+
     </div>
 
   </div>
+</div>
 
+<!-- Mobile Sidebar -->
+<div class="offcanvas offcanvas-start"
+     tabindex="-1"
+     id="mobileSidebar">
+
+  <div class="offcanvas-header">
+    <h5 class="fw-bold">TaskFlow</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <div class="offcanvas-body">
+    <nav class="nav flex-column">
+      <a class="nav-link" routerLink="home" data-bs-dismiss="offcanvas">Home</a>
+      <a class="nav-link" routerLink="tasks" data-bs-dismiss="offcanvas">Tasks</a>
+      <a class="nav-link" routerLink="about" data-bs-dismiss="offcanvas">About</a>
+    </nav>
+  </div>
 </div>

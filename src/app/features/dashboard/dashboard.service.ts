@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
 
-  private baseUrl = 'https://localhost:7077/api/v1';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -14,15 +15,18 @@ export class DashboardService {
     return this.http.get<any>(`${this.baseUrl}/auth/me`);
   }
 
-  getMyTasks() {
-    return this.http.get<any>(`${this.baseUrl}/task/my`);
+  // ✅ PAGINATED GET
+  getTasks(page: number, pageSize: number) {
+    return this.http.get<any>(
+      `${this.baseUrl}/Task?page=${page}&pageSize=${pageSize}`
+    );
   }
 
-  createTask(data: { title: string }) {
+  createTask(data: any) {
     return this.http.post<any>(`${this.baseUrl}/task`, data);
   }
 
-  updateTask(id: number, data: { title: string; isCompleted: boolean }) {
+  updateTask(id: number, data: any) {
     return this.http.put<any>(`${this.baseUrl}/task/${id}`, data);
   }
 

@@ -1,61 +1,95 @@
 <div class="tasks-container">
 
-  <h2>My Tasks</h2>
-
-  <!-- Add Task -->
+  <!-- ================= ADD TASK ================= -->
   <div class="add-task">
-    <input
-      type="text"
-      [(ngModel)]="newTaskTitle"
-      placeholder="Enter task title"
-    />
-    <button (click)="addTask()">Add</button>
-  </div>
-<!-- //<div class="task-card" *ngFor="let task of filteredTasks"> -->
+    <div class="input-wrapper">
+      <input
+        type="text"
+        [(ngModel)]="newTaskTitle"
+        maxlength="100"
+        placeholder="Enter task title..."
+      />
+      <span class="char-count">
+        {{ newTaskTitle.length || 0 }}/100
+      </span>
+    </div>
 
-  <!-- Loading -->
-  <div *ngIf="loading" class="loading">
-    Loading...
+    <button
+      class="add-btn"
+      (click)="addTask()"
+      [disabled]="!newTaskTitle.trim()">
+      + Add Task
+    </button>
   </div>
+
+  <!-- ================= LOADING ================= -->
+  <div *ngIf="loading">Loading...</div>
+
+  <!-- ================= FILTERS ================= -->
   <div class="filters">
-  <button 
-    [class.active]="filter === 'all'" 
-    (click)="setFilter('all')">All</button>
+    <button [class.active]="filter === 'all'" (click)="setFilter('all')">
+      All
+    </button>
 
-  <button 
-    [class.active]="filter === 'completed'" 
-    (click)="setFilter('completed')">Completed</button>
+    <button [class.active]="filter === 'completed'" (click)="setFilter('completed')">
+      Completed
+    </button>
 
-  <button 
-    [class.active]="filter === 'pending'" 
-    (click)="setFilter('pending')">Pending</button>
-</div>
+    <button [class.active]="filter === 'pending'" (click)="setFilter('pending')">
+      Pending
+    </button>
+  </div>
 
-
-  <!-- Empty State -->
-  <div *ngIf="!loading && tasks.length === 0" class="empty">
+  <!-- ================= EMPTY ================= -->
+  <div *ngIf="!loading && filteredTasks.length === 0">
     No tasks found.
   </div>
 
-  <!-- Task List -->
-  <div *ngIf="!loading && tasks.length > 0">
-    <div class="task-card" *ngFor="let task of tasks">
-      
-      <span [class.completed]="task.isCompleted">
-        {{ task.title }}
-      </span>
+  <!-- ================= TASK LIST ================= -->
+  <div *ngFor="let task of filteredTasks" class="task-card">
 
-      <div class="actions">
-        <button (click)="toggleComplete(task)">
-          {{ task.isCompleted ? 'Undo' : 'Complete' }}
-        </button>
+    <span *ngIf="editingTaskId !== task.id"
+          [class.completed]="task.status === 'Completed'">
+      {{ task.title }}
+    </span>
 
-        <button class="delete" (click)="deleteTask(task.id)">
+    <input *ngIf="editingTaskId === task.id"
+           [(ngModel)]="editTitle" />
+
+    <div class="actions">
+
+      <ng-container *ngIf="editingTaskId !== task.id">
+        <button (click)="startEdit(task)">Edit</button>
+
+        <button class="delete"
+                (click)="deleteTask(task.id)">
           Delete
         </button>
-      </div>
+      </ng-container>
+
+      <ng-container *ngIf="editingTaskId === task.id">
+        <button (click)="saveEdit(task)">Save</button>
+        <button (click)="cancelEdit()">Cancel</button>
+      </ng-container>
 
     </div>
+
   </div>
 
+</div>
+
+<!-- ================= PAGINATION ================= -->
+
+<div class="pagination">
+  <button (click)="prev()" [disabled]="currentPage === 1">
+    Prev
+  </button>
+
+  <span>
+    Page {{ currentPage }} of {{ totalPages }}
+  </span>
+
+  <button (click)="next()" [disabled]="currentPage === totalPages">
+    Next
+  </button>
 </div>

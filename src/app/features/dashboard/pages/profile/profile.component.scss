@@ -1,0 +1,66 @@
+.profile-wrapper {
+  padding: 30px 20px;
+}
+
+.profile-wrapper h2 {
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 26px;
+  color: #1e293b;
+}
+
+/* Card Style */
+.profile-card {
+  max-width: 500px;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  padding: 30px;
+  border-radius: 20px;
+  color: white;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft Glow Effect */
+.profile-card::before {
+  content: "";
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -40%;
+  left: -40%;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+  transform: rotate(25deg);
+}
+
+/* Hover Animation */
+.profile-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+/* Text Styling */
+.profile-card p {
+  margin: 15px 0;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
+
+/* Label Styling */
+.profile-card strong {
+  color: #e0f2fe;
+  margin-right: 5px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 22px;
+    border-radius: 16px;
+  }
+
+  .profile-card p {
+    font-size: 14px;
+  }
+}

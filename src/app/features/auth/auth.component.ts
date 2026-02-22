@@ -52,7 +52,6 @@ export class AuthComponent {
 
         const token = res.data.token;
         localStorage.setItem('token', token);
-        this.toast.show('login successful','success')
         this.loading = false;
         this.router.navigate(['/dashboard']);
       },

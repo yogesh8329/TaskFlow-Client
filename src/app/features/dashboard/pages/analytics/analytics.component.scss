@@ -1,0 +1,69 @@
+.analytics-wrapper {
+  padding: 20px;
+}
+
+/* Responsive Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Base Card */
+.stat-card {
+  padding: 28px;
+  border-radius: 18px;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Title */
+.stat-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+/* Number */
+.stat-card p {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Hover */
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Different Colors Using nth-child */
+.stat-card:nth-child(1) {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.stat-card:nth-child(2) {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.stat-card:nth-child(3) {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+
+.stat-card:nth-child(4) {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+/* Mobile tweak */
+@media (max-width: 768px) {
+  .stat-card {
+    padding: 20px;
+  }
+
+  .stat-card p {
+    font-size: 24px;
+  }
+}

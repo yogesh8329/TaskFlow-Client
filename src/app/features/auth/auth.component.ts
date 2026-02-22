@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
-
+import { ToastService } from 'src/app/shared/toast.service';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -18,7 +18,8 @@ export class AuthComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toast:ToastService
   ) {
 
     this.loginForm = this.fb.group({
@@ -51,7 +52,7 @@ export class AuthComponent {
 
         const token = res.data.token;
         localStorage.setItem('token', token);
-
+        this.toast.show('login successful','success')
         this.loading = false;
         this.router.navigate(['/dashboard']);
       },

@@ -15,12 +15,13 @@ export class RegisterComponent {
   loading = false;
   submitted = false;
   serverError = '';
-  toast: any;
+  
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toast:ToastService
   ) {
 
     this.registerForm = this.fb.group(

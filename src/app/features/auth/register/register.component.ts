@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
-  ValidationErrors
-} from '@angular/forms';
+import { ToastService } from 'src/app/shared/toast.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
+import { FormBuilder,FormGroup, Validators,AbstractControl, ValidationErrors,} from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +15,7 @@ export class RegisterComponent {
   loading = false;
   submitted = false;
   serverError = '';
+  toast: any;
 
   constructor(
     private fb: FormBuilder,
@@ -94,6 +90,7 @@ export class RegisterComponent {
     this.authService.register({ email, password }).subscribe({
       next: () => {
         this.loading = false;
+        this.toast.show('you are sucessfully Registerd', 'success');
         this.router.navigate(['/auth']);
       },
       error: (err) => {

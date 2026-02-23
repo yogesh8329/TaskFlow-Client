@@ -34,9 +34,9 @@
 
         <!-- Right Section -->
         <div class="d-flex align-items-center gap-3">
-          <span class="text-muted small d-none d-sm-inline">
-            Welcome, {{ user?.name || user?.email }}
-          </span>
+         <span class="text-muted small">
+          Welcome, {{ user?.name || user?.email }}
+         </span>
           <button class="btn btn-danger btn-sm" (click)="logout()">
             Logout
           </button>
@@ -57,7 +57,7 @@
 <!-- Mobile Sidebar -->
 <div class="offcanvas offcanvas-start"
      tabindex="-1"
-     id="mobileSidebar">
+     id="mobileSidebar" style="width: 260px;">
 
   <div class="offcanvas-header">
     <h5 class="fw-bold">TaskFlow</h5>
@@ -67,8 +67,8 @@
   <div class="offcanvas-body">
     <nav class="nav flex-column">
       <a class="nav-link" routerLink="home" data-bs-dismiss="offcanvas">Home</a>
-      <a class="nav-link" routerLink="profile" routerLinkActive="offcanvas">Profile</a>
-      <a class="nav-link" routerLink="analytics" routerLinkActive="offcanvas">Analytics</a>    
+      <a class="nav-link"routerLink="profile"routerLinkActive="active" data-bs-dismiss="offcanvas">Profile</a>
+      <a class="nav-link"routerLink="analytics"routerLinkActive="active"  data-bs-dismiss="offcanvas"> Analytics</a>  
       <a class="nav-link" routerLink="tasks" data-bs-dismiss="offcanvas">Tasks</a>
       <a class="nav-link" routerLink="about" data-bs-dismiss="offcanvas">About</a>
     </nav>

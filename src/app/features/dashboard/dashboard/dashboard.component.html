@@ -34,9 +34,9 @@
 
         <!-- Right Section -->
         <div class="d-flex align-items-center gap-3">
-         <span class="text-muted small">
-          Welcome, {{ user?.name || user?.email }}
-         </span>
+        <span class="text-muted small d-none d-md-inline">
+        Welcome, {{ user?.email }}
+        </span>
           <button class="btn btn-danger btn-sm" (click)="logout()">
             Logout
           </button>

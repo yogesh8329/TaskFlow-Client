@@ -148,13 +148,12 @@
 }
 
 .pagination button {
-  padding: 6px 14px;
-  width: 12%;
+  padding: 8px 18px;
   border-radius: 6px;
   border: 1px solid #ddd;
- background-color: #0d6efd;
+  background-color: #0d6efd;
+  color: white;
   cursor: pointer;
-  color:#ddd;
 }
 
 .pagination button:disabled {
